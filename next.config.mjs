@@ -2,7 +2,6 @@
 const nextConfig = {
   basePath: '/website-builder',
   reactStrictMode: true,
-  swcMinify: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },

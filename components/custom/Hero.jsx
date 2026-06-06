@@ -1,7 +1,7 @@
 "use client"
 import Lookup from '@/data/Lookup';
 import { MessagesContext } from '@/context/MessagesContext';
-import { ArrowRight, Link, Sparkles, Send, Wand2, Loader2 } from 'lucide-react';
+import { Link, Sparkles, Send, Wand2, Loader2 } from 'lucide-react';
 import React, { useContext, useState } from 'react';
 import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';

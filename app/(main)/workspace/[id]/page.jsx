@@ -1,7 +1,8 @@
 "use client";
 
 import dynamic from 'next/dynamic';
-import React from 'react';
+import React, { useState } from 'react';
+import { MessageSquare, Code2 } from 'lucide-react';
 
 const ChatView = dynamic(() => import('@/components/custom/ChatView'), {
     ssr: false,
@@ -22,13 +23,42 @@ const BackgroundPattern = React.memo(() => (
 BackgroundPattern.displayName = 'BackgroundPattern';
 
 const Workspace = () => {
+    const [mobileTab, setMobileTab] = useState('chat');
+
     return (
         <div className="min-h-screen bg-gray-950 relative overflow-hidden">
             <BackgroundPattern />
-            <div className='relative z-10 p-10'>
-                <div className='grid grid-cols-1 md:grid-cols-4 gap-10'>
-                    <ChatView />
-                    <div className='col-span-3'>
+            {/* Mobile Tab Switcher */}
+            <div className="md:hidden flex border-b border-gray-800 bg-gray-900/80 backdrop-blur-sm relative z-20">
+                <button
+                    onClick={() => setMobileTab('chat')}
+                    className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium transition-colors ${
+                        mobileTab === 'chat'
+                            ? 'text-blue-400 border-b-2 border-blue-500'
+                            : 'text-gray-500'
+                    }`}
+                >
+                    <MessageSquare className="h-4 w-4" />
+                    Chat
+                </button>
+                <button
+                    onClick={() => setMobileTab('code')}
+                    className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium transition-colors ${
+                        mobileTab === 'code'
+                            ? 'text-blue-400 border-b-2 border-blue-500'
+                            : 'text-gray-500'
+                    }`}
+                >
+                    <Code2 className="h-4 w-4" />
+                    Code
+                </button>
+            </div>
+            <div className='relative z-10 p-4 md:p-10'>
+                <div className='grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-10'>
+                    <div className={`${mobileTab === 'code' ? 'hidden' : 'block'} md:block`}>
+                        <ChatView />
+                    </div>
+                    <div className={`${mobileTab === 'chat' ? 'hidden' : 'block'} md:block md:col-span-3`}>
                         <CodeView />
                     </div>
                 </div>
