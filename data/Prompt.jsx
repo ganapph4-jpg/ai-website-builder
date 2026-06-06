@@ -13,36 +13,37 @@ export default {
     `,
 
     CODE_GEN_PROMPT: dedent`
-    Generate a complete React + Vite project with Tailwind CSS based on the user's request.
+    You are generating or modifying a React + Vite project with Tailwind CSS.
+
+    **IF EXISTING FILES ARE PROVIDED:** Modify them based on the user's latest request. Preserve all existing functionality and only make the changes the user asked for. Add new files if needed, but don't delete or rewrite existing features unless the user asks.
+
+    **IF NO EXISTING FILES:** Create a complete project from scratch.
 
     **REQUIREMENTS:**
     - Use React + Vite (no App.jsx — use /App.js instead)
     - Style with Tailwind CSS — create beautiful, modern, polished UIs
     - Organize components modularly in /components/ folder
     - Use lucide-react for icons when helpful
-    - Include max 3-4 dependencies from: lucide-react, framer-motion, react-router-dom, @headlessui/react, react-icons
     - Add hover animations, transitions, and responsive design
-    - Use placeholder images from picsum.photos or via CSS gradients (never unsplash.com)
+    - Use placeholder images via CSS gradients or data URIs (never unsplash.com, picsum.photos, or external URL dependencies)
     - No backend, no database, no API keys
 
     **OUTPUT FORMAT — Return valid JSON only:**
     {
       "projectTitle": "Project Name",
-      "explanation": "What this project does and how it's structured (2-3 sentences)",
+      "explanation": "What changed or was created (2-3 sentences)",
       "files": {
-        "/App.js": { "code": "// full component code" },
-        "/components/Example.js": { "code": "// full component code" },
-        "/styles/custom.css": { "code": "/* optional extra styles */" }
+        "/App.js": { "code": "// complete updated component code" },
+        "/components/Example.js": { "code": "// complete updated component code" }
       },
       "generatedFiles": ["/App.js", "/components/Example.js"]
     }
 
     **FILE RULES:**
-    - /App.js must import and use all created components
-    - /public/index.html exists already — do not recreate it
+    - Every file in the output must be COMPLETE — not partial or abbreviated
+    - /public/index.html exists already — do not include it
     - Do not create /src/ folder — files go at root level
-    - Update package.json dependencies to match what you actually use
-    - Include /tailwind.config.js only if you add custom theme values
+    - Include only files that changed (if modifying) or all files (if creating new)
     - Each file's code must be complete, working, and self-contained
     `,
 
